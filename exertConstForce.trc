@@ -1,0 +1,1068 @@
+-- ****************************************************************************
+--
+--  Trace file: exertConstForce.trc
+--
+--  RTI1103 6.5 (10-May-2010)
+--  Tue Sep 20 16:57:36 2016
+--
+--  Used options:
+--    TRCGenerateVirtualBlocks      = 1
+--    TRCGenerateLabels             = 1
+--    TRCMaskParameters             = 0
+--    TRCGenerateStates             = 0
+--    TRCGenerateDerivatives        = 0
+--    TRCGenerateParamValues        = 0
+--    TRCGenerateApplicationKeyword = 0
+--    EnableRTWCodeReuse            = 1
+--    TRCOnlyGlobals                = 0
+--
+--  Trace file format: 2
+--
+--  (c) Copyright 2008, dSPACE GmbH. All rights reserved.
+--
+-- ****************************************************************************
+
+-- ******** Keywords **********************************************************
+
+-- _application "exertConstForce.map"
+
+_genname     "RTI"
+_genversion  "6.5"
+_gendate     "09/20/2016 16:57:38"
+_description ""
+_author      "RTI1103 6.5 (10-May-2010)"
+_model       "exertConstForce.mdl"
+
+-- Default data type formats
+_floating_point_type(64,IEEE)
+_integer_type(32)
+
+-- No Data Capture blocks within model: use base sample time as sampling period
+sampling_period[0]
+{
+  value:       0.001
+  alias:       "HostService"
+  increment:   0.001
+  unit:        "s"
+}
+
+
+-- Type definitions for arrays
+typedef exertConstForce_ArrayDT0_6 flt(64,IEEE)[6]
+typedef exertConstForce_ArrayDT0_6_6_Col col flt(64,IEEE)[6][6]
+
+
+-- ******** Simulation control variables **************************************
+
+finalTime
+{
+ type:  flt(64,IEEE)*
+ alias: "finalTime"
+ desc:  "Simulation stop time. When reached, simState switches to STOP."
+ flags:  SYSTEM|READONLY
+ unit:  "s"
+}
+
+currentTime
+{
+ type:  flt(64,IEEE)*
+ alias: "currentTime"
+ desc:  "Current simulation time. Increments with execution of Timer Task 1."
+ flags: SYSTEM|READONLY
+ unit:  "s"
+}
+
+modelStepSize
+{
+ type:  flt(64,IEEE)
+ alias: "modelStepSize"
+ desc:  "Fixed step size of the model, sample time of Timer Task 1."
+ flags: SYSTEM|READONLY
+ unit:  "s"
+}
+
+simState
+{
+ type:  int(32)
+ alias: "simState"
+ desc:  "Simulation state: STOP=0 PAUSE=1 RUN=2"
+ flags: SYSTEM
+ unit:  "-"
+}
+
+msg_last_error_no
+{
+ type:  uint(32)
+ alias: "errorNumber"
+ desc:  "Error number of last error message (zero if no error)."
+ unit:  "-"
+ flags: SYSTEM|READONLY
+}
+
+rtiAssertionMode
+{
+ type:  int(32)
+ alias: "rtiAssertionMode"
+ desc:  "Assertion Mode: OFF=0 WARN=1 STOP=2"
+ flags: SYSTEM
+ unit:  "-"
+}
+
+
+-- ******** Model variables ***************************************************
+
+group "Model Root"
+{
+ flags: COLLAPSED
+}
+	group "Vector\nConcatenate" -- block-group
+	{
+	 block: "Concatenate"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[9]
+		{
+		 type:    exertConstForce_ArrayDT0_6*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "Vector\nConcatenate"
+
+	group "Constant" -- block-group
+	{
+	 block: "Constant"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		-- Skipping output Out1
+		p_exertConstForce_P_real_T_0[5]
+		{
+		 type:    exertConstForce_ArrayDT0_6_6_Col*
+		 alias:   "Value"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "Constant"
+
+	group "ID" -- block-group
+	{
+	 block: "Constant"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		-- Skipping output Out1
+		p_exertConstForce_P_real_T_0[52]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "ID"
+
+	group "Reset" -- block-group
+	{
+	 block: "Constant"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		-- Skipping output Out1
+		p_exertConstForce_P_real_T_0[4]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "Reset"
+
+	group "uForce" -- block-group
+	{
+	 block: "Constant"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		-- Skipping output Out1
+		p_exertConstForce_P_real_T_0[0]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "uForce"
+
+	group "uNoForce" -- block-group
+	{
+	 block: "Constant"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		-- Skipping output Out1
+		p_exertConstForce_P_real_T_0[1]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Value"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "uNoForce"
+
+	group "Demux" -- block-group
+	{
+	 block: "Demux"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[15]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_B_real_T_0[16]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out2"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_B_real_T_0[17]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out3"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_B_real_T_0[18]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out4"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_B_real_T_0[19]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out5"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_B_real_T_0[20]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out6"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "Demux"
+
+	group "GainFx" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[21]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[46]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "GainFx"
+
+	group "GainFy" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[22]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[47]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "GainFy"
+
+	group "GainFz" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[23]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[48]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "GainFz"
+
+	group "GainMx" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[24]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[49]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "GainMx"
+
+	group "GainMy" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[25]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[50]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "GainMy"
+
+	group "GainMz" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[26]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[51]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "GainMz"
+
+	group "channel17" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[9]
+		{
+		 type:    exertConstForce_ArrayDT0_6*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[42]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "channel17"
+
+	group "channel18" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[9]
+		{
+		 type:    exertConstForce_ArrayDT0_6*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[43]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "channel18"
+
+	group "channel19" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[9]
+		{
+		 type:    exertConstForce_ArrayDT0_6*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[44]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "channel19"
+
+	group "channel20" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[9]
+		{
+		 type:    exertConstForce_ArrayDT0_6*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[45]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "channel20"
+
+	group "channel5" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[1]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[2]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "channel5"
+
+	group "channel9" -- block-group
+	{
+	 block: "Gain"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[9]
+		{
+		 type:    exertConstForce_ArrayDT0_6*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[41]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Gain"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "channel9"
+
+	group "Matrix Multiply" -- block-group
+	{
+	 block: "Product"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[15]
+		{
+		 type:    exertConstForce_ArrayDT0_6*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "Matrix Multiply"
+
+	group "u1" -- block-group
+	{
+	 block: "Product"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[3]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "u1"
+
+	group "Variable\nSelector" -- block-group
+	{
+	 block: "S-Function"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[27]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+
+
+	endgroup -- block-group "Variable\nSelector"
+
+	group "Switch" -- block-group
+	{
+	 block: "Switch"
+	 desc:  ""
+	 flags: BLOCK|COLLAPSED
+	}
+		p_exertConstForce_B_real_T_0[2]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Out1"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		p_exertConstForce_P_real_T_0[3]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Threshold"
+		 flags:   PARAM
+		}
+
+
+	endgroup -- block-group "Switch"
+
+  
+  
+	group "DS1103ADC_C17" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+		p_exertConstForce_B_real_T_0[4]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "ADC"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+	endgroup -- subsystem-group "DS1103ADC_C17"
+  
+  
+	group "DS1103ADC_C18" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+		p_exertConstForce_B_real_T_0[5]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "ADC"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+	endgroup -- subsystem-group "DS1103ADC_C18"
+  
+  
+	group "DS1103ADC_C19" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+		p_exertConstForce_B_real_T_0[6]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "ADC"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+	endgroup -- subsystem-group "DS1103ADC_C19"
+  
+  
+	group "DS1103ADC_C20" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+		p_exertConstForce_B_real_T_0[7]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "ADC"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+	endgroup -- subsystem-group "DS1103ADC_C20"
+  
+  
+	group "DS1103DAC_C2" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+	endgroup -- subsystem-group "DS1103DAC_C2"
+  
+  
+	group "DS1103ENC_SETUP" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+	endgroup -- subsystem-group "DS1103ENC_SETUP"
+  
+  
+	group "DS1103MUX_ADC_CON2" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+		p_exertConstForce_B_real_T_0[0]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "ADC"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+	endgroup -- subsystem-group "DS1103MUX_ADC_CON2"
+  
+  
+	group "DS1103MUX_ADC_CON3" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+		p_exertConstForce_B_real_T_0[8]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "ADC"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+	endgroup -- subsystem-group "DS1103MUX_ADC_CON3"
+  
+  
+	group "EncoderY" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+		p_exertConstForce_B_real_T_1[0]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "EncPosY"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+		-- Skipping output EncVelY
+
+		group "encGainY" -- block-group
+		{
+		 block: "Gain"
+		 desc:  ""
+		 flags: BLOCK|COLLAPSED
+		}
+			p_exertConstForce_B_real_T_1[0]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 desc:    ""
+			 flags:   OUTPUT|READONLY
+			}
+			p_exertConstForce_P_real_T_0[53]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Gain"
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "encGainY"
+
+  
+  
+		group "DS1103ENC_POS_C3" -- subsystem-group
+		{
+		 flags: COLLAPSED
+		 desc:  ""
+		}
+
+			p_exertConstForce_B_real_T_0[28]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Enc position"
+			 desc:    ""
+			 flags:   OUTPUT|READONLY
+			}
+			-- Skipping output Enc delta position
+		endgroup -- subsystem-group "DS1103ENC_POS_C3"
+
+
+	endgroup -- subsystem-group "EncoderY"
+  
+  
+	group "RTI Data" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+	endgroup -- subsystem-group "RTI Data"
+  
+  
+	group "VelY" -- subsystem-group
+	{
+	 flags: COLLAPSED
+	 desc:  ""
+	}
+
+		p_exertConstForce_B_real_T_1[3]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "Y"
+		 desc:    ""
+		 flags:   OUTPUT|READONLY
+		}
+
+		group "U" -- block-group
+		{
+		 block: "Inport"
+		 desc:  ""
+		 flags: BLOCK|COLLAPSED
+		}
+			p_exertConstForce_B_real_T_1[0]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 desc:    ""
+			 flags:   OUTPUT|READONLY
+			}
+
+
+		endgroup -- block-group "U"
+
+		group "Diff" -- block-group
+		{
+		 block: "Sum"
+		 desc:  "\nAdd in CPU"
+		 flags: BLOCK|COLLAPSED
+		}
+			p_exertConstForce_B_real_T_1[3]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 desc:    ""
+			 flags:   OUTPUT|READONLY
+			}
+
+
+		endgroup -- block-group "Diff"
+
+		group "UD" -- block-group
+		{
+		 block: "UnitDelay"
+		 desc:  "\nStore in Global RAM"
+		 flags: BLOCK|COLLAPSED
+		}
+			p_exertConstForce_B_real_T_1[2]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 desc:    ""
+			 flags:   OUTPUT|READONLY
+			}
+			p_exertConstForce_P_real_T_0[55]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "X0"
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "UD"
+
+		group "Data Type\nDuplicate" -- block-group
+		{
+		 block: "DataTypeDuplicate"
+		 desc:  ""
+		 flags: BLOCK|COLLAPSED
+		}
+			p_exertConstForce_B_real_T_1[3]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "In1"
+			 desc:    ""
+			 flags:   SINK|READONLY
+			}
+			p_exertConstForce_B_real_T_1[1]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "In2"
+			 desc:    ""
+			 flags:   SINK|READONLY
+			}
+			p_exertConstForce_B_real_T_1[2]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "In3"
+			 desc:    ""
+			 flags:   SINK|READONLY
+			}
+
+
+
+		endgroup -- block-group "Data Type\nDuplicate"
+
+		group "TSamp" -- block-group
+		{
+		 block: "SampleTimeMath"
+		 desc:  ""
+		 flags: BLOCK|COLLAPSED
+		}
+			p_exertConstForce_B_real_T_1[1]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "Out1"
+			 desc:    ""
+			 flags:   OUTPUT|READONLY
+			}
+			p_exertConstForce_P_real_T_0[54]
+			{
+			 type:    flt(64,IEEE)*
+			 alias:   "WtEt"
+			 flags:   PARAM
+			}
+
+
+		endgroup -- block-group "TSamp"
+
+
+		p_exertConstForce_B_real_T_1[2]
+		{
+		 type:    flt(64,IEEE)*
+		 alias:   "U(k-1)"
+		 desc:    ""
+		 origin:  "exertConstForce/VelY/UD/Out1"
+		 flags:   LABEL|READONLY
+		}
+
+	endgroup -- subsystem-group "VelY"
+
+
+
+
+endgroup -- "Model Root"
+-- ******** Model Root Parameters from model_mrp.trc **************************
+-- Model Root Parameters file is only generated if option TRCMaskParameters is enabled
+
+-- ******** Tunable Parameters ************************************************
+
+-- InlineParameters is off: no separate group for Tunable Parameters
+
+
+-- ******** State Machine Data ************************************************
+
+-- No Stateflow chart within the model.
+
+
+-- ******** Data Store Memories ***********************************************
+
+-- No Data Store Memories within the model.
+
+
+-- ******** Labels ************************************************************
+
+group "Labels"
+{
+ flags: COLLAPSED
+}
+	p_exertConstForce_B_real_T_1[2]
+	{
+	 type:    flt(64,IEEE)*
+	 alias:   "U(k-1)"
+	 desc:    ""
+	 origin:  "exertConstForce/VelY/UD/Out1"
+	 flags:   LABEL|READONLY
+	}
+
+endgroup
+
+-- ******** RTT Dynamic Variables *********************************************
+
+-- Generation of RTT Dynamic Variables turned off with EnableRealTimeTesting option.
+
+-- ******** User variables from model_usr.trc *********************************
+
+-- RTI_USR_TRC_BEGIN
+
+-- No user file exertConstForce_usr.trc found.
+
+-- RTI_USR_TRC_END
+
+-- ******** Task Information variables ****************************************
+
+group "Task Info"
+{
+ flags: COLLAPSED
+}
+  group "Timer Task 1"
+  {
+   flags: COLLAPSED
+  }
+
+  pRti_TIMERA_STime
+  {
+   type:  flt(64,IEEE)*
+   alias: "sampleTime"
+   flags: SYSTEM|READONLY
+  }
+  pRti_TIMERA_TTime
+  {
+   type:  flt(64,IEEE)*
+   alias: "turnaroundTime"
+   flags: SYSTEM|READONLY
+  }
+  pRti_TIMERA_TState
+  {
+   type:  int(32)*
+   alias: "state"
+   flags: SYSTEM|READONLY
+  }
+  pRti_TIMERA_OType
+  {
+   type:  int(32)*
+   alias: "overrunCheckType"
+   flags: SYSTEM|READONLY
+  }
+  pRti_TIMERA_OMax
+  {
+   type:  int(32)*
+   alias: "overrunQueueMax"
+   flags: SYSTEM|READONLY
+  }
+  pRti_TIMERA_ORpt
+  {
+   type:  int(32)*
+   alias: "overrunQueueCount"
+   flags: SYSTEM|READONLY
+  }
+  pRti_TIMERA_OCnt
+  {
+   type:  int(32)*
+   alias: "overrunCount"
+   flags: SYSTEM|READONLY
+  }
+  pRti_TIMERA_TCnt
+  {
+   type:  flt(64,IEEE)*
+   alias: "taskCallCount"
+   flags: SYSTEM|READONLY
+  }
+  pRti_TIMERA_Prio
+  {
+   type:  int(32)*
+   alias: "priority"
+   flags: SYSTEM|READONLY
+  }
+  endgroup
+
+endgroup
+
+-- ******** [EOF] *************************************************************
+
+
+
